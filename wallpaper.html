@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        #hero{
+            width: 100%;
+            height: 100vh;
+            background-image: url("Radiance_img/bg1.png");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .navbar{
+            width: 90%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+
+        .navbar .logo{
+            width: 60px;
+            margin: 30px 0;
+            cursor: pointer;
+        }
+
+        .user{
+            display: flex;
+            align-items: center;
+        }
+
+        .user img{
+            width: 30px;
+            margin-left: 90px;
+        }
+
+        button{
+            padding: 8px 25px;
+            background: transparent;
+            outline: none;
+            border: 2px solid #009688;
+            border-radius: 20px;
+            color: #fff;
+            /* font-size: 12px; */
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container{
+            width: 50%;
+            height: 100vh;
+            background: rgba(86,86,86,0.3);
+            backdrop-filter: blur(10px);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .random{
+            width: 550px;
+            color: #fff;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .random h1{
+            font-size: 50px;
+            letter-spacing: 10px;
+        }
+
+        .random p{
+            color: #f0eef1;
+            font-size: 15px;
+            margin: 20px 0;
+            line-height: 18px;
+        }
+
+        .random input{
+            width: 50%;
+            padding: 8px 10px;
+            outline: none;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            background: transparent;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        body{
+            /* background: url(a); */
+        }
+
+        ::placeholder{
+            color: #ccc;
+        }
+
+        .slider{
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 30px;
+            bottom: 50px;
+        }
+
+        #prev, #next{
+            width: 20px;
+            cursor: pointer;
+        }
+        
+        .preview{
+            display: flex;
+            align-items: center;
+            margin: 0 60px;
+        }
+
+        .preview img{
+            width: 60px;
+            margin: 0 10px;
+            opacity: 0.4;
+        }
+
+        .preview .active{
+            display: block;
+            border: 3px solid #fff;
+            width: 100px;
+            height: 100px;
+            opacity: 1;
+        }
+        .thumbnail{
+            cursor: pointer;
+        }
+
+        span{
+            background: #009688;
+            height: 100%;
+            width: 0;
+            border-radius: 25px;
+            left: 0;
+            bottom: 0;
+            position: absolute;
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        button:hover span{
+            width: 100%;
+        }
+
+        button:hover{
+            border: none;
+        }
+        .a{
+            width: 40px;
+            height: 40px;
+        }
+
+        #para{
+            margin-bottom: -17px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="hero">
+        <div class="navbar">
+            <img src="../Radiance_img/logo.png" class="logo">
+            <div class="user">
+                <button type="button"><span></span>Explore</button>
+                <img src="../Radiance_img/user.png">
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="random">
+                <h1 id="head">DISCOVER</h1>
+                <p id="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus numquam nisi <br> corrupti inventore adipisci amet rerum dolores.</p>
+                <p id="para2"></p>
+                <input type="text" placeholder="search the places">
+            </div>
+        </div>
+
+
+
+        <div class="slider">
+            <img src="../Radiance_img/left-arrow.png" id="prev">
+            <div class="preview">
+                <img src="https://www.newsonline.media/wp-content/uploads/2020/08/Hiroshima-Day-image-1-1024x1024.jpg" class="active thumbnail a" id="1">
+                <img src="https://www.newsonline.media/wp-content/uploads/2020/08/Hiroshima-Day-image-3.png" class="thumbnail a" id="2">
+                <img src="https://i.pinimg.com/originals/78/b4/91/78b49155b6ca96efdd1f207078d7da24.jpg" class="thumbnail a" id="3">
+                <img src="https://cpcml.ca/images2014/Historical/HiroshimaNagasakiNeverAgain-nuclearabolitiionistCr.jpg" class="thumbnail a" id="4">
+                <img src="https://nuclearcompanion.com/wp-content/uploads/2019/04/imagen_titulo_hiroshima-1024x1024.png" class="thumbnail a" id="5">
+
+            </div>
+            <img src="../Radiance_img/right-arrow.png" id="next">
+        </div>
+
+    </div>
+
+    <script>
+        var prev = document.getElementById("prev");
+        var next = document.getElementById("next");
+        var thumbnail = document.getElementsByClassName("thumbnail");
+        var head = document.getElementById("head");
+        var para = document.getElementById("para");
+        var para2 = document.getElementById("para2");
+
+        var backgroundImg = new Array(
+            "https://www.newsonline.media/wp-content/uploads/2020/08/Hiroshima-Day-image-1-1024x1024.jpg",
+            "https://www.newsonline.media/wp-content/uploads/2020/08/Hiroshima-Day-image-3.png",
+            "https://i.pinimg.com/originals/78/b4/91/78b49155b6ca96efdd1f207078d7da24.jpg",
+            "https://cpcml.ca/images2014/Historical/HiroshimaNagasakiNeverAgain-nuclearabolitiionistCr.jpg",
+            "https://nuclearcompanion.com/wp-content/uploads/2019/04/imagen_titulo_hiroshima-1024x1024.png",
+        );
+        let i = 0;
+        next.onclick = function(){
+            
+            if (i < 4){
+                hero.style.backgroundImage = 'url("'+backgroundImg[i+1]+'")';
+                thumbnail[i+1].classList.add('active');
+                thumbnail[i].classList.remove('active');
+                i++;
+                if(i == 1){
+                    head.innerText = "HIROSHIMA DAY";
+                    para.innerText = "Every positive value has its price in negative terms......";
+                    para2.innerText = "the price of Einstien leads to Hiroshima";
+                }if(i == 2){
+                    head.innerText = "ALSO KNOWN ";
+                    para.innerText = "The Hiroshima is also known as Anti Nuclear day as on this day first time";
+                    para2.innerText = " use of was seen and just after three days of Hiroshima another nuclear weapon was dropped in Nagasaki.";   
+                }if (i == 3) {
+                    head.innerText = "NEVER AGAIN";
+                    para.innerText = "Also in the attack the Hiroshima was completely destroyed, which made Japan";
+                    para2.innerText = " suffer with a lot of consequenses to become the first in terms of technology";
+                }if(i == 4){
+                    head.innerText = "ALSO VIEW";
+                    para.innerText = "Hiroshima, a practical guide for visting its peace memorial park.";
+                    para2.innerText = "These two World Heritage Sites in Hiroshima are both very unique, therefore many people from all over the world visit Hiroshima to see them. Please visit Hiroshima to see these world heritage sites.";
+                }
+            }
+        }
+        prev.onclick = function(){
+            
+            if (i > 0){
+                hero.style.backgroundImage = 'url("'+backgroundImg[i-1]+'")';
+                thumbnail[i-1].classList.add('active');
+                thumbnail[i].classList.remove('active');
+                i--;
+                if(i == 0){
+                    head.innerText = "6TH, AUGUST";
+                    para.innerText = "Marks the day USA dropped an atomic bomb at Hiroshima, Japan, was the time";
+                    para2.innerText = " of the World War 1. In this attack, millions of people died and millions were injured";
+                }if(i == 1){
+                    head.innerText = "HIROSHIMA DAY";
+                    para.innerText = "Every positive value has its price in negative terms......";
+                    para2.innerText = "the price of Einstien leads to Hiroshima";
+                }if(i == 2){
+                    head.innerText = "ALSO KNOWN ";
+                    para.innerText = "The Hiroshima is also known as Anti Nuclear day as on this day first time";
+                    para2.innerText = " use of was seen and just after three days of Hiroshima another nuclear weapon was dropped in Nagasaki.";   
+                }if (i == 3) {
+                    head.innerText = "NEVER AGAIN";
+                    para.innerText = "Also in the attack the Hiroshima was completely destroyed, which made Japan";
+                    para2.innerText = " suffer with a lot of consequenses to become the first in terms of technology";
+                }if(i == 4){
+
+                }
+            }
+        }
+
+        var one = document.getElementById("1");
+        var two = document.getElementById("2");
+        var three = document.getElementById("3");
+        var four = document.getElementById("4");
+        var five = document.getElementById("5");
+
+        one.onclick = function(){
+            hero.style.backgroundImage = 'url("'+backgroundImg[0]+'")';
+            // one.classList.add('active');
+            thumbnail[i].classList.remove('active');
+            one.classList.add('active');
+            head.innerText = "6TH, AUGUST";
+            para.innerText = "Marks the day USA dropped an atomic bomb at Hiroshima, Japan, was the time";
+            para2.innerText = " of the World War 1. In this attack, millions of people died and millions were injured";
+            i=0;
+        }
+
+        two.onclick = function(){
+            hero.style.backgroundImage = 'url("'+backgroundImg[1]+'")';
+            // two.classList.add('active');
+            thumbnail[i].classList.remove('active');
+            two.classList.add('active');
+            head.innerText = "HIROSHIMA DAY";
+            para.innerText = "Every positive value has its price in negative terms......";
+            para2.innerText = "the price of Einstien leads to Hiroshima";
+            i=1;
+        }
+        three.onclick = function(){
+            hero.style.backgroundImage = 'url("'+backgroundImg[2]+'")';
+            // three.classList.add('active');
+            thumbnail[i].classList.remove('active');
+            three.classList.add('active');
+            head.innerText = "ALSO KNOWN ";
+            para.innerText = "The Hiroshima is also known as Anti Nuclear day as on this day first time";
+            para2.innerText = " use of was seen and just after three days of Hiroshima another nuclear weapon was dropped in Nagasaki.";
+            i=2;
+        }
+        four.onclick = function(){
+            hero.style.backgroundImage = 'url("'+backgroundImg[3]+'")';
+            // four.classList.add('active');
+            thumbnail[i].classList.remove('active');
+            four.classList.add('active');
+            head.innerText = "NEVER AGAIN";
+            para.innerText = "Also in the attack the Hiroshima was completely destroyed, which made Japan";
+            para2.innerText = " suffer with a lot of consequenses to become the first in terms of technology";
+            i=3;
+        }
+        five.onclick = function(){
+            hero.style.backgroundImage = 'url("'+backgroundImg[4]+'")';
+            // five.classList.add('active');
+            thumbnail[i].classList.remove('active');
+            five.classList.add('active');
+            head.innerText = "ALSO VIEW";
+            para.innerText = "Hiroshima, a practical guide for visting its peace memorial park.";
+            para2.innerText = "These two World Heritage Sites in Hiroshima are both very unique, therefore many people from all over the world visit Hiroshima to see them. Please visit Hiroshima to see these world heritage sites.";
+            i=4;
+    
+        }
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'a'){
+                if (i > 0){
+                    hero.style.backgroundImage = 'url("'+backgroundImg[i-1]+'")';
+                    thumbnail[i-1].classList.add('active');
+                    thumbnail[i].classList.remove('active');
+                    i--;
+                    if(i == 0){
+                        head.innerText = "6TH, AUGUST";
+                        para.innerText = "Marks the day USA dropped an atomic bomb at Hiroshima, Japan, was the time";
+                        para2.innerText = " of the World War 1. In this attack, millions of people died and millions were injured";
+                    }if(i == 1){
+                        head.innerText = "HIROSHIMA DAY";
+                        para.innerText = "Every positive value has its price in negative terms......";
+                        para2.innerText = "the price of Einstien leads to Hiroshima";
+                    }if(i == 2){
+                        head.innerText = "ALSO KNOWN ";
+                        para.innerText = "The Hiroshima is also known as Anti Nuclear day as on this day first time";
+                        para2.innerText = " use of was seen and just after three days of Hiroshima another nuclear weapon was dropped in Nagasaki.";   
+                    }if (i == 3) {
+                        head.innerText = "NEVER AGAIN";
+                        para.innerText = "Also in the attack the Hiroshima was completely destroyed, which made Japan";
+                        para2.innerText = " suffer with a lot of consequenses to become the first in terms of technology";
+                    }
+                }
+            }if (event.key === 'd'){
+                if (i < 4){
+                    hero.style.backgroundImage = 'url("'+backgroundImg[i+1]+'")';
+                    thumbnail[i+1].classList.add('active');
+                    thumbnail[i].classList.remove('active');
+                    i++;
+                    if(i == 1){
+                        head.innerText = "HIROSHIMA DAY";
+                        para.innerText = "Every positive value has its price in negative terms......";
+                        para2.innerText = "the price of Einstien leads to Hiroshima";
+                    }if(i == 2){
+                        head.innerText = "ALSO KNOWN ";
+                        para.innerText = "The Hiroshima is also known as Anti Nuclear day as on this day first time";
+                        para2.innerText = " use of was seen and just after three days of Hiroshima another nuclear weapon was dropped in Nagasaki.";   
+                    }if (i == 3) {
+                        head.innerText = "NEVER AGAIN";
+                        para.innerText = "Also in the attack the Hiroshima was completely destroyed, which made Japan";
+                        para2.innerText = " suffer with a lot of consequenses to become the first in terms of technology";
+                    }if(i == 4){
+                        head.innerText = "ALSO VIEW";
+                        para.innerText = "Hiroshima, a practical guide for visting its peace memorial park.";
+                        para2.innerText = "These two World Heritage Sites in Hiroshima are both very unique, therefore many people from all over the world visit Hiroshima to see them. Please visit Hiroshima to see these world heritage sites.";
+                    }
+                }
+            } 
+        })
+
+        
+
+
+
+    </script>
+
+</body>
+</html>
